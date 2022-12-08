@@ -8,8 +8,6 @@
 - [Why is this library only compatible Next? Why not make it a broader React library?](#why-is-this-library-only-compatible-next-why-not-make-it-a-broader-react-library)
 - [React/Next Experimental Feature Documentation](#reactnext-experimental-feature-documentation)
 
----
-
 ## About
 
 Using Notion as a CMS and Next to generate static sites is a match made in heaven. You end up with:
@@ -20,26 +18,21 @@ Using Notion as a CMS and Next to generate static sites is a match made in heave
 
 I had played around with a couple other Notion + React libraries, such as [react-notion-x](https://github.com/NotionX/react-notion-x) and [react-notion](https://github.com/splitbee/react-notion). However, I wanted to use the official Notion API, take a different approach with fetching/rendering data, and also make working with typescript easier.
 
----
-
 ## Features
 
 - Automatically generates types based on your Notion database properties.
 - Provides React components to render your Notion Pages, but also makes it easy to fetch your Notion data and build your own custom components.
 - Downloads all of the media from your database into your public folder, to get around Notion API's 1 hr media expiration.
 
----
-
 ## Installation
 
+- Assumes you already have a Next.js project set up. If you don't [see here](https://beta.nextjs.org/docs/installation).
 - `npm i notion-on-next`
 - Make sure your Notion Databases have a connection setup
 - Add NOTION_KEY=yoursecret to your .env
 - `npx non setup`
 
 Your types will be automatically generated based on your database properties, and all of the media will be downloaded to your public folder.
-
----
 
 ## Basic usage in Next.js
 
@@ -146,8 +139,6 @@ export const cachedGetParsedPages = cache(
 );
 ```
 
----
-
 ## Working with Media
 
 [Media from the official Notion API expires every hour](https://developers.notion.com/docs/working-with-files-and-media).
@@ -169,13 +160,9 @@ export const ImageCard = ({databaseId, pageId, blockId}) => {
 }
 ```
 
----
-
 ## Why is this library only compatible Next? Why not make it a broader React library?
 
 The honest answer is because this started out with me wanting to play with Next 13 and React experimental features. I used a lot of those features and patterns in this library. However, this could be refactored to work for vanilla React. If you're interested in that, let me know. With enough interest I may re-write the library.
-
----
 
 ## React/Next Experimental Feature Documentation
 

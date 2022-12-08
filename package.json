@@ -6,11 +6,20 @@
   "bin": {
     "non": "./bin/index.js"
   },
+  "repository": "https://github.com/williamlmao/notion-on-next",
+  "keywords": [
+    "notion",
+    "next",
+    "cms",
+    "blog",
+    "portfolio",
+    "website"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@types/prompt": "^1.1.4",
     "@types/react": "^18.0.26",

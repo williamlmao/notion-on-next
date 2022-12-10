@@ -61,17 +61,29 @@ export const generateTypesFromDatabase = async (
   // @ts-ignore -- Notion API types are not consistent with the actual API
   const databaseName = database.title[0].plain_text.replace(/[^a-z0-9]/gi, "");
   const databaseProperties = database.properties;
+
+  // If you need to add a new property type, add it here. https://github.com/makenotion/notion-sdk-js/blob/main/src/api-endpoints.ts for reference.
   const propertyTypeMap = {
-    rich_text: "RichTextItemResponse",
-    select: "SelectPropertyItemObjectResponse",
     number: "NumberPropertyItemObjectResponse",
-    title: "TitlePropertyItemObjectResponse",
-    multi_select: "MultiSelectPropertyItemObjectResponse",
-    checkbox: "CheckboxPropertyItemObjectResponse",
     url: "UrlPropertyItemObjectResponse",
-    email: "EmailPropertyItemObjectResponse",
+    select: "SelectPropertyItemObjectResponse",
+    multi_select: "MultiSelectPropertyItemObjectResponse",
+    status: "StatusPropertyItemObjectResponse",
     date: "DatePropertyItemObjectResponse",
-    person: "PersonPropertyItemObjectResponse",
+    email: "EmailPropertyItemObjectResponse",
+    phone_number: "PhoneNumberPropertyItemObjectResponse",
+    checkbox: "CheckboxPropertyItemObjectResponse",
+    file: "FilesPropertyItemObjectResponse",
+    created_by: "CreatedByPropertyItemObjectResponse",
+    created_time: "CreatedTimePropertyItemObjectResponse",
+    last_edited_time: "LastEditedByPropertyItemObjectResponse",
+    last_edited_by: "LastEditedTimePropertyItemObjectResponse",
+    formula: "FormulaPropertyItemObjectResponse",
+    title: "TitlePropertyItemObjectResponse",
+    rich_text: "RichTextPropertyItemObjectResponse",
+    people: "PeoplePropertyItemObjectResponse",
+    relation: "RelationPropertyItemObjectResponse",
+    rollup: "RollupPropertyItemObjectResponse",
   };
   const allBlockTypesFromResponse = Object.keys(databaseProperties).map(
     (key) => {

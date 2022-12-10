@@ -205,7 +205,7 @@ export const Block = asyncComponent(
           </blockquote>
         );
       case "divider":
-        return <hr />;
+        return <hr className="notion_divider" />;
       case "to_do":
         return (
           // className="flex items-center"

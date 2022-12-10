@@ -5,7 +5,12 @@
 - [Installation](#installation)
 - [Basic usage in Next.js](#basic-usage-in-nextjs)
 - [Working with Media](#working-with-media)
+- [Commands](#commands)
 - [Why is this library only compatible Next? Why not make it a broader React library?](#why-is-this-library-only-compatible-next-why-not-make-it-a-broader-react-library)
+- [Reference](#reference)
+  - [Data fetchers](#data-fetchers)
+  - [Components](#components)
+- [Contributing](#contributing)
 - [React/Next Experimental Feature Documentation](#reactnext-experimental-feature-documentation)
 
 ## About
@@ -160,9 +165,46 @@ export const ImageCard = ({databaseId, pageId, blockId}) => {
 }
 ```
 
+## Commands
+
+- `npx non setup`
+  - Generates a `notion-on-next.config.js` file in the root of your project.
+  - Generates `notion-on-next.types.ts` that includes all of your database types in whichever folder you specify.
+  - Downloads all media in specified databases into `/public/notion-media`.
+- `npx non media`
+  - Downloads media from every database specified in `notion-on-next.config.js` into `/public/notion-media.
+  - Run this command again if you added new media or if you see broken images on your site.
+- `npx non types`
+  - Generates your types based on the databases specified in `notion-on-next.config.js`. If you want to change the file path.
+  - Run this command again if you update any database properties.
+
 ## Why is this library only compatible Next? Why not make it a broader React library?
 
 The honest answer is because this started out with me wanting to play with Next 13 and React experimental features. I used a lot of those features and patterns in this library. However, this could be refactored to work for vanilla React. If you're interested in that, let me know. With enough interest I may re-write the library.
+
+## Reference
+
+### Data fetchers
+
+| Name           | Description                                                                                            |
+| -------------- | ------------------------------------------------------------------------------------------------------ |
+| getDatabase    | Fetches a database, raw API                                                                            |
+| getPages       | Fetches a page, raw API                                                                                |
+| getParsedPages | Fetches a page but exposes title, coverImage, and slug. Allows you to pass in a database-specific type |
+| getBlocks      | Fetches all blocks in a page, raw                                                                      |
+
+### Components
+
+| Name             | Description                                                                                                                                    |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| NotionPageHeader | There is no component called NotionPageHeader exported. It is recommended to write your own, as every database will have different properties. |
+| NotionPageBody   | A container for all of a page's blocks.                                                                                                        |
+| Block            | Renders a Notion block and child blocks.                                                                                                       |
+| RichText         | Renders rich text.                                                                                                                             |
+
+## Contributing
+
+This is one of my first npm packages, so I am very open to any contributions or feedback! Please feel free to open an issue or PR.
 
 ## React/Next Experimental Feature Documentation
 

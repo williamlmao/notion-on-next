@@ -1,7 +1,7 @@
 {
   "name": "notion-on-next",
   "version": "1.0.2",
-  "description": "A framework that makes it easy using Notion as a CMS for your Next.js blog, portfolio, or any other website.",
+  "description": "A framework that makes it easy to develop a Next.js App using Notion as a CMS. Automatically generates types and provides components to render your Notion pages.",
   "main": "index.js",
   "bin": {
     "non": "./bin/index.js"

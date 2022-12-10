@@ -36,7 +36,7 @@ a {
   font-size: 1rem;
 }
 
-hr {
+.notion_divider {
   border: 0;
   border-top: 1px solid #eaecef;
   margin: 2rem 0;

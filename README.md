@@ -11,7 +11,6 @@
   - [Data fetchers](#data-fetchers)
   - [Components](#components)
 - [Contributing](#contributing)
-- [React/Next Experimental Feature Documentation](#reactnext-experimental-feature-documentation)
 
 ## About
 
@@ -206,6 +205,11 @@ The honest answer is because this started out with me wanting to play with Next 
 
 This is one of my first npm packages, so I am very open to any contributions or feedback! Please feel free to open an issue or PR.
 
-## React/Next Experimental Feature Documentation
+To update any code:
 
-https://github.com/acdlite/rfcs/blob/first-class-promises/text/0000-first-class-support-for-promises.md#example-use-in-client-components-and-hooks (to read about cache)
+- `npm install`
+- To modify any executable functions, like `setup` `media` or `types`, modify the files in `src/bin`
+- To modify any React components, checkout `components`
+- Data fetching functions using Notion JS SDK are in `src/getFromNotion`
+- After making changes, run `tsc` to compile the typescript files
+- If you want to test your changes locally in a next app, run `npm link` in the root of this project and then `npm link notion-on-next` in the root of your next app.

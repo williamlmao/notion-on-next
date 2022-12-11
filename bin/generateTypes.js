@@ -49,7 +49,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.appendToFile = exports.replaceImports = exports.updateImports = exports.generateTypesFromDatabase = exports.initializeTypes = exports.generateTypes = void 0;
+exports.appendToFile = exports.updateImports = exports.generateTypesFromDatabase = exports.initializeTypes = exports.generateTypes = void 0;
 var fs_1 = __importDefault(require("fs"));
 var getFromNotion_1 = require("../src/getFromNotion");
 var utils_1 = require("./utils");
@@ -98,7 +98,7 @@ exports.generateTypes = generateTypes;
 var initializeTypes = function (path) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         fs_1.default.writeFileSync(path, "\n      import {\n        PageObjectResponse,\n      } from \"@notionhq/client/build/src/api-endpoints\";\n      \n      export interface NotionOnNextPageObjectResponse extends PageObjectResponse {\n        slug: string | undefined;\n        title: string | undefined;\n        coverImage: string | undefined;\n      }\n      export interface mediaMapInterface {\n        [key: string]: {\n          [key: string]: {\n            [key: string]: string;\n          };\n        };\n      }\n      ");
-        console.log("Created notion-on-next.types.ts");
+        console.log("Initialized notion-on-next.types.ts");
         return [2 /*return*/];
     });
 }); };
@@ -137,7 +137,6 @@ var generateTypesFromDatabase = function (path, database) { return __awaiter(voi
                     return property.type;
                 });
                 uniqueBlockTypesFromDatabase = Array.from(new Set(allBlockTypesFromResponse));
-                console.log("uniqueBlockTypesFromDatabase", uniqueBlockTypesFromDatabase);
                 allBlockTypeImports = uniqueBlockTypesFromDatabase
                     .map(function (type) { return propertyTypeMap[type]; })
                     .filter(Boolean);
@@ -154,7 +153,8 @@ var generateTypesFromDatabase = function (path, database) { return __awaiter(voi
                 });
                 typeDef = typeDefStart + typeDefProperties.join("\n") + typeDefEnd;
                 return [4 /*yield*/, (0, exports.appendToFile)(path, typeDef, function () {
-                        console.log("Appended files to" + path);
+                        console.log("Generated a type for your database ".concat(databaseName, ": ").concat(database, "PageObjectResponse in") +
+                            path);
                     })];
             case 2:
                 _a.sent();
@@ -202,53 +202,13 @@ var updateImports = function (filePath, uniqueBlockTypesFromDatabase) {
                     console.log(err);
                     return;
                 }
-                console.log("Updated imports in ", filePath);
+                console.log("Updated imports statement in ", filePath, " with ", uniqueCombinedTypeImports.join(", "));
                 resolve("done");
             });
         });
     });
 };
 exports.updateImports = updateImports;
-var replaceImports = function (filePath, newImports) {
-    // return a promise
-    return new Promise(function (resolve, reject) {
-        fs_1.default.readFile(filePath, "utf-8", function (err, contents) {
-            var _a;
-            if (err) {
-                console.log(err);
-                return reject(err);
-            }
-            var currentImports = (_a = contents
-                .match(/import \{(.|\n)*?\} from/g)) === null || _a === void 0 ? void 0 : _a[0].split(",").map(function (currentImport) { return currentImport.trim(); });
-            var updatedImports = "";
-            if (currentImports) {
-                // Filter out any newImports that already exist in currentImports
-                var newImportsFiltered = newImports
-                    .split(",")
-                    .map(function (newImport) { return newImport.trim(); })
-                    .filter(function (newImport) {
-                    return !currentImports.includes(newImport);
-                });
-                var combinedImports = __spreadArray(__spreadArray([], currentImports, true), [newImportsFiltered], false);
-                updatedImports = combinedImports.join(", ");
-            }
-            else {
-                updatedImports = newImports;
-            }
-            // const newContents is replacing anything between "import {" and "} from"
-            var newContents = contents.replace(/import \{(.|\n)*?\} from/g, newImports);
-            fs_1.default.writeFile(filePath, newContents, "utf-8", function (err) {
-                if (err) {
-                    console.log(err);
-                    return;
-                }
-                console.log("Updated imports in ", filePath);
-                resolve("done");
-            });
-        });
-    });
-};
-exports.replaceImports = replaceImports;
 var appendToFile = function (filePath, data, callback) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         return [2 /*return*/, new Promise(function (resolve, reject) {

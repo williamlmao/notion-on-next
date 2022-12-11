@@ -111,7 +111,6 @@ function fetchImages(databaseId, pages, update) {
                                     // @ts-ignore -- TODO: Fix this type error
                                     mediaMapDb[pageId] = {};
                                     pageFolderPath = "".concat(databasePath, "/").concat(pageId);
-                                    console.log("pageFolderPath: ", pageFolderPath);
                                     return [4 /*yield*/, (0, utils_1.createFolderIfDoesNotExist)("".concat(pageFolderPath))];
                                 case 1:
                                     _c.sent();
@@ -122,7 +121,7 @@ function fetchImages(databaseId, pages, update) {
                                     // @ts-ignore -- TODO: Fix this type error
                                     mediaMap[databaseId][pageId].cover = coverImagePathWithoutPublic;
                                     return [4 /*yield*/, (0, exports.downloadMediaToFolder)(page.coverImage, coverImagePath, function () {
-                                            console.log("Downloaded cover image for ".concat(pageId));
+                                            console.log("Downloaded cover image for ".concat(page.title, " (id:").concat(pageId, ") in database: ").concat(databaseId));
                                         }, update)];
                                 case 2:
                                     _c.sent();
@@ -153,7 +152,7 @@ function fetchImages(databaseId, pages, update) {
                                         // @ts-ignore -- TODO: Fix this type error
                                         mediaMap[databaseId][pageId][blockId] = blockImagePathWithoutPublic;
                                         (0, exports.downloadMediaToFolder)(url, blockImagePath, function () {
-                                            console.log("Downloaded image for ".concat(blockId));
+                                            "Downloaded image for blockId: ".concat(block.id, " in ").concat(page.title, " (id:").concat(pageId, ") in databaseId: ").concat(databaseId);
                                         }, update);
                                     };
                                     for (_b = 0, blocks_1 = blocks; _b < blocks_1.length; _b++) {
@@ -190,7 +189,7 @@ var downloadMediaToFolder = function (url, path, callback, update) { return __aw
         switch (_a.label) {
             case 0:
                 if (fs_1.default.existsSync(path) && !update) {
-                    console.log("File already exists, skipping download");
+                    console.log("File already exists at ".concat(path, ", skipping download"));
                     callback();
                     return [2 /*return*/];
                 }

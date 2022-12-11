@@ -4,9 +4,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Code = void 0;
-var hljs_1 = require("react-syntax-highlighter/dist/esm/styles/hljs");
+var hljs_1 = require("react-syntax-highlighter/dist/cjs/styles/hljs");
 var react_1 = __importDefault(require("react"));
-var default_highlight_1 = __importDefault(require("react-syntax-highlighter/dist/esm/default-highlight"));
+var default_highlight_1 = __importDefault(require("react-syntax-highlighter/dist/cjs/default-highlight"));
 // //@ts-ignore
 // const DynamicSyntaxHighlighter = dynamic(
 //   () => import("react-syntax-highlighter"),

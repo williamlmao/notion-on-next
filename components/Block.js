@@ -121,7 +121,7 @@ exports.Block = (0, types_1.asyncComponent)(function (_a) {
                                     : block.image.file.url;
                             return [2 /*return*/, (react_1.default.createElement("div", { className: "" },
                                     react_1.default.createElement(image_1.default, { src: imageUrl || "/fallback.png", alt: "Notion page image", width: 700, height: 700 }),
-                                    react_1.default.createElement("span", { className: "notion_image_caption" }, block.image.caption && (react_1.default.createElement(RichText_1.RichText, { rich_text: block.image.caption })))))];
+                                    react_1.default.createElement("span", { className: "notion_caption" }, block.image.caption && (react_1.default.createElement(RichText_1.RichText, { rich_text: block.image.caption })))))];
                         case "video":
                             videoUrl = databaseId && pageId && mediaMap
                                 ? mediaMap[databaseId][pageId][block.id]
@@ -131,7 +131,7 @@ exports.Block = (0, types_1.asyncComponent)(function (_a) {
                             if (videoUrl) {
                                 return [2 /*return*/, (react_1.default.createElement("div", { className: "" },
                                         react_1.default.createElement("video", { controls: true, src: videoUrl, className: "notion_".concat(block.type) }),
-                                        react_1.default.createElement("span", { className: "notion_image_caption" }, block.video.caption && (react_1.default.createElement(RichText_1.RichText, { rich_text: block.video.caption })))))];
+                                        react_1.default.createElement("span", { className: "notion_caption" }, block.video.caption && (react_1.default.createElement(RichText_1.RichText, { rich_text: block.video.caption })))))];
                             }
                             else {
                                 return [2 /*return*/, react_1.default.createElement("div", { className: "" }, "Video URL not found")];
@@ -159,7 +159,9 @@ exports.Block = (0, types_1.asyncComponent)(function (_a) {
                                     children))];
                         case "code":
                             return [2 /*return*/, (react_1.default.createElement("div", { className: "notion_".concat(block.type) },
-                                    react_1.default.createElement(Code_1.Code, { text: block.code.rich_text[0].plain_text, language: "javascript" })))];
+                                    react_1.default.createElement(Code_1.Code, { text: block.code.rich_text[0].plain_text, language: "javascript" }),
+                                    block.code.caption && (react_1.default.createElement("span", { className: "notion_caption" },
+                                        react_1.default.createElement(RichText_1.RichText, { rich_text: block.code.caption })))))];
                         case "callout":
                             return [2 /*return*/, (react_1.default.createElement("div", { className: "notion_".concat(block.type) },
                                     react_1.default.createElement(RichText_1.RichText, { rich_text: block.callout.rich_text })))];

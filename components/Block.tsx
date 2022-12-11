@@ -134,7 +134,7 @@ export const Block = asyncComponent(
               width={700}
               height={700}
             />
-            <span className="notion_image_caption">
+            <span className="notion_caption">
               {block.image.caption && (
                 <RichText rich_text={block.image.caption} />
               )}
@@ -157,7 +157,7 @@ export const Block = asyncComponent(
                 src={videoUrl}
                 className={`notion_${block.type}`}
               />
-              <span className="notion_image_caption">
+              <span className="notion_caption">
                 {block.video.caption && (
                   <RichText rich_text={block.video.caption} />
                 )}
@@ -207,6 +207,11 @@ export const Block = asyncComponent(
               text={block.code.rich_text[0].plain_text}
               language={"javascript"}
             />
+            {block.code.caption && (
+              <span className="notion_caption">
+                <RichText rich_text={block.code.caption} />
+              </span>
+            )}
           </div>
         );
       case "callout":

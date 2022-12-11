@@ -77,3 +77,11 @@ a {
 .notion_to_do {
   margin-right: 0.5rem;
 }
+
+.notion_caption {
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.5;
+  margin: 0 0 1.5rem;
+  color: #6e7681;
+}

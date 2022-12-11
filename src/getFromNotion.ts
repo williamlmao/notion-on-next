@@ -13,7 +13,6 @@ export const getDatabase = async (databaseId: string) => {
     const response = await notion.databases.retrieve({
       database_id: databaseId,
     });
-    console.dir(response, { depth: null });
     return response;
   } catch (e) {
     console.error(

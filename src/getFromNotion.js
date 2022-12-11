@@ -86,7 +86,6 @@ var getDatabase = function (databaseId) { return __awaiter(void 0, void 0, void 
                     })];
             case 1:
                 response = _a.sent();
-                console.dir(response, { depth: null });
                 return [2 /*return*/, response];
             case 2:
                 e_1 = _a.sent();

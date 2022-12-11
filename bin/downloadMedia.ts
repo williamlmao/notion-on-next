@@ -29,9 +29,13 @@ export async function fetchImages(
 ) {
   // Read media map
   const mediaMapPath = "./public/notion-media/media-map.json";
-  const mediaMap = JSON.parse(
-    fs.readFileSync(mediaMapPath, "utf8")
-  ) as mediaMapInterface;
+  // Check if media map exists
+  let mediaMap = {} as mediaMapInterface;
+  if (fs.existsSync(mediaMapPath)) {
+    mediaMap = JSON.parse(
+      fs.readFileSync(mediaMapPath, "utf8")
+    ) as mediaMapInterface;
+  }
   const basePath = `./public/notion-media`;
   await createFolderIfDoesNotExist(`${basePath}`);
   const databasePath = `${basePath}/${databaseId}`;
@@ -46,8 +50,9 @@ export async function fetchImages(
   for (const page of pages) {
     const mediaMapDb = mediaMap[databaseId];
     const pageId = page.id;
-    // @ts-ignore -- TODO: Fix this type error
-    mediaMapDb[pageId] = {};
+    if (!mediaMapDb[pageId]) {
+      mediaMapDb[pageId] = {};
+    }
     const pageFolderPath = `${databasePath}/${pageId}`;
     await createFolderIfDoesNotExist(`${pageFolderPath}`);
     // Download cover images
@@ -94,7 +99,7 @@ export async function fetchImages(
       const fileExtension = getFileExtension(url);
       const blockImagePath = `${pageFolderPath}/${blockId}.${fileExtension}`;
       const blockImagePathWithoutPublic = `/notion-media/${databaseId}/${pageId}/${blockId}.${fileExtension}`;
-      // @ts-ignore -- TODO: Fix this type error
+
       mediaMap[databaseId][pageId][blockId] = blockImagePathWithoutPublic;
       downloadMediaToFolder(
         url,

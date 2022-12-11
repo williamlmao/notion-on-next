@@ -23,7 +23,6 @@ export const Table = asyncComponent(
                   {/* @ts-ignore */}
                   {row.table_row.cells.map((cell, j) => {
                     if (cell) {
-                      console.log("cell", cell);
                       return (
                         <td
                           key={cell.id}

@@ -49,7 +49,6 @@ export async function fetchImages(
     // @ts-ignore -- TODO: Fix this type error
     mediaMapDb[pageId] = {};
     const pageFolderPath = `${databasePath}/${pageId}`;
-    console.log("pageFolderPath: ", pageFolderPath);
     await createFolderIfDoesNotExist(`${pageFolderPath}`);
     // Download cover images
     if (page.coverImage) {
@@ -65,7 +64,9 @@ export async function fetchImages(
         page.coverImage,
         coverImagePath,
         () => {
-          console.log(`Downloaded cover image for ${pageId}`);
+          console.log(
+            `Downloaded cover image for ${page.title} (id:${pageId}) in database: ${databaseId}`
+          );
         },
         update
       );
@@ -99,7 +100,7 @@ export async function fetchImages(
         url,
         blockImagePath,
         () => {
-          console.log(`Downloaded image for ${blockId}`);
+          `Downloaded image for blockId: ${block.id} in ${page.title} (id:${pageId}) in databaseId: ${databaseId}`;
         },
         update
       );
@@ -116,7 +117,7 @@ export const downloadMediaToFolder = async (
   update?: boolean
 ) => {
   if (fs.existsSync(path) && !update) {
-    console.log("File already exists, skipping download");
+    console.log(`File already exists at ${path}, skipping download`);
     callback();
     return;
   }

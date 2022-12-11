@@ -51,7 +51,7 @@ export const initializeTypes = async (path: string) => {
       }
       `
   );
-  console.log("Created notion-on-next.types.ts");
+  console.log("Initialized notion-on-next.types.ts");
 };
 
 export const generateTypesFromDatabase = async (
@@ -94,7 +94,7 @@ export const generateTypesFromDatabase = async (
   const uniqueBlockTypesFromDatabase = Array.from(
     new Set(allBlockTypesFromResponse)
   );
-  console.log("uniqueBlockTypesFromDatabase", uniqueBlockTypesFromDatabase);
+
   const allBlockTypeImports = uniqueBlockTypesFromDatabase
     .map((type) => propertyTypeMap[type as keyof typeof propertyTypeMap])
     .filter(Boolean); // filter out undefined
@@ -112,7 +112,10 @@ export const generateTypesFromDatabase = async (
 
   const typeDef = typeDefStart + typeDefProperties.join("\n") + typeDefEnd;
   await appendToFile(path, typeDef, () => {
-    console.log("Appended files to" + path);
+    console.log(
+      `Generated a type for your database ${databaseName}: ${database}PageObjectResponse in` +
+        path
+    );
   });
 };
 
@@ -173,56 +176,12 @@ export const updateImports = (
           console.log(err);
           return;
         }
-        console.log("Updated imports in ", filePath);
-        resolve("done");
-      });
-    });
-  });
-};
-
-export const replaceImports = (filePath: string, newImports: string) => {
-  // return a promise
-  return new Promise((resolve, reject) => {
-    fs.readFile(filePath, "utf-8", function (err, contents) {
-      if (err) {
-        console.log(err);
-        return reject(err);
-      }
-
-      const currentImports = contents
-        .match(/import \{(.|\n)*?\} from/g)?.[0]
-        .split(",")
-        .map((currentImport: string) => currentImport.trim());
-      console.log("currentImports", currentImports);
-      let updatedImports = "";
-      if (currentImports) {
-        console.log("inside of current imports");
-        // Filter out any newImports that already exist in currentImports
-        const newImportsFiltered = newImports
-          .split(",")
-          .map((newImport: string) => newImport.trim())
-          .filter((newImport: string) => {
-            return !currentImports.includes(newImport);
-          });
-        const combinedImports = [...currentImports, newImportsFiltered];
-        console.log("combinedImports", combinedImports);
-        updatedImports = combinedImports.join(", ");
-      } else {
-        updatedImports = newImports;
-      }
-
-      // const newContents is replacing anything between "import {" and "} from"
-      const newContents = contents.replace(
-        /import \{(.|\n)*?\} from/g,
-        newImports
-      );
-
-      fs.writeFile(filePath, newContents, "utf-8", function (err) {
-        if (err) {
-          console.log(err);
-          return;
-        }
-        console.log("Updated imports in ", filePath);
+        console.log(
+          "Updated imports statement in ",
+          filePath,
+          " with ",
+          uniqueCombinedTypeImports.join(", ")
+        );
         resolve("done");
       });
     });

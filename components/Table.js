@@ -47,23 +47,19 @@ var RichText_1 = require("./RichText");
 exports.Table = (0, types_1.asyncComponent)(function (_a) {
     var block = _a.block;
     return __awaiter(void 0, void 0, void 0, function () {
-        var children, table_width, has_column_header, has_row_header;
+        var children, has_column_header, has_row_header;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0: return [4 /*yield*/, (0, getFromNotion_1.getBlocks)(block.id)];
                 case 1:
                     children = _b.sent();
-                    table_width = block.table.table_width;
                     has_column_header = block.table.has_column_header;
                     has_row_header = block.table.has_row_header;
-                    console.log("has_column_header", has_column_header);
                     return [2 /*return*/, (react_1.default.createElement("table", { className: "notion_table" },
                             react_1.default.createElement("tbody", null, children === null || children === void 0 ? void 0 : children.map(function (row, i) {
-                                console.log("has_column_header", has_column_header, i);
                                 if (row) {
                                     return (react_1.default.createElement("tr", { key: row.id, className: has_column_header && i === 0 ? "notion_table_header" : "" }, row.table_row.cells.map(function (cell, j) {
                                         if (cell) {
-                                            console.log("cell", cell);
                                             return (react_1.default.createElement("td", { key: cell.id, className: "notion_table_cell ".concat(has_row_header && i === 0
                                                     ? "notion_table_header"
                                                     : "") },

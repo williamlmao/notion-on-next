@@ -220,10 +220,8 @@ var replaceImports = function (filePath, newImports) {
             }
             var currentImports = (_a = contents
                 .match(/import \{(.|\n)*?\} from/g)) === null || _a === void 0 ? void 0 : _a[0].split(",").map(function (currentImport) { return currentImport.trim(); });
-            console.log("currentImports", currentImports);
             var updatedImports = "";
             if (currentImports) {
-                console.log("inside of current imports");
                 // Filter out any newImports that already exist in currentImports
                 var newImportsFiltered = newImports
                     .split(",")
@@ -232,7 +230,6 @@ var replaceImports = function (filePath, newImports) {
                     return !currentImports.includes(newImport);
                 });
                 var combinedImports = __spreadArray(__spreadArray([], currentImports, true), [newImportsFiltered], false);
-                console.log("combinedImports", combinedImports);
                 updatedImports = combinedImports.join(", ");
             }
             else {

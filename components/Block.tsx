@@ -10,6 +10,7 @@ import { RichText } from "./RichText";
 import { getBlocks } from "../index";
 import React from "react";
 import { Code } from "./Code";
+import { Table } from "./Table";
 
 /**
  * A recursive component that renders a Notion block and child blocks.
@@ -34,7 +35,8 @@ export const Block = asyncComponent(
     }
 
     let children: React.ReactNode[] | undefined;
-    if (block.has_children) {
+    // Table blocks are handled a bit differently. See Table.tsx
+    if (block.has_children && block.type !== "table") {
       const childBlocks = await getBlocks(block.id);
       children = childBlocks?.map(
         (child: BlockObjectResponse | PartialBlockObjectResponse) => {
@@ -258,6 +260,9 @@ export const Block = asyncComponent(
             {children}
           </details>
         );
+      case "table":
+        return <Table block={block} />;
+
       default:
         return <div>Block {block.type} not supported</div>;
     }

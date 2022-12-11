@@ -47,6 +47,7 @@ var RichText_1 = require("./RichText");
 var index_1 = require("../index");
 var react_1 = __importDefault(require("react"));
 var Code_1 = require("./Code");
+var Table_1 = require("./Table");
 /**
  * A recursive component that renders a Notion block and child blocks.
  * @param mediaMap is an object that notion-on-next generates for you. Find it in public/notion-media/media-map.json.
@@ -61,7 +62,7 @@ exports.Block = (0, types_1.asyncComponent)(function (_a) {
                     if (!(0, client_1.isFullBlock)(block)) {
                         return [2 /*return*/, react_1.default.createElement(react_1.default.Fragment, null)];
                     }
-                    if (!block.has_children) return [3 /*break*/, 2];
+                    if (!(block.has_children && block.type !== "table")) return [3 /*break*/, 2];
                     return [4 /*yield*/, (0, index_1.getBlocks)(block.id)];
                 case 1:
                     childBlocks_1 = _b.sent();
@@ -189,6 +190,8 @@ exports.Block = (0, types_1.asyncComponent)(function (_a) {
                                     react_1.default.createElement("summary", null,
                                         react_1.default.createElement(RichText_1.RichText, { rich_text: block.toggle.rich_text })),
                                     children))];
+                        case "table":
+                            return [2 /*return*/, react_1.default.createElement(Table_1.Table, { block: block })];
                         default:
                             return [2 /*return*/, react_1.default.createElement("div", null,
                                     "Block ",

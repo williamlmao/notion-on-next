@@ -9,6 +9,7 @@ export const RichText = ({
   return (
     <>
       {rich_text.map((rich_text_item, index) => {
+        if (!rich_text_item) return <></>;
         const { bold, italic, strikethrough, underline, code } =
           rich_text_item.annotations;
         const color = rich_text_item.annotations.color.includes("background")

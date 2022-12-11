@@ -85,3 +85,26 @@ a {
   margin: 0 0 1.5rem;
   color: #6e7681;
 }
+
+.notion_callout {
+  padding: 1rem;
+  border-radius: 3px;
+  border: 1px solid #eaecef;
+  background-color: #f9fafb;
+  margin: 0 0 1.5rem;
+}
+
+.notion_table,
+.notion_table_row,
+.notion_table_cell {
+  border: 1px solid;
+}
+
+.notion_table_cell {
+  padding: 0.5rem;
+}
+
+.notion_table_header {
+  font-weight: 700;
+  background-color: #f9fafb;
+}

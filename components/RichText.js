@@ -8,6 +8,8 @@ var react_1 = __importDefault(require("react"));
 var RichText = function (_a) {
     var rich_text = _a.rich_text;
     return (react_1.default.createElement(react_1.default.Fragment, null, rich_text.map(function (rich_text_item, index) {
+        if (!rich_text_item)
+            return react_1.default.createElement(react_1.default.Fragment, null);
         var _a = rich_text_item.annotations, bold = _a.bold, italic = _a.italic, strikethrough = _a.strikethrough, underline = _a.underline, code = _a.code;
         var color = rich_text_item.annotations.color.includes("background")
             ? { backgroundColor: rich_text_item.annotations.color.split("_")[0] }

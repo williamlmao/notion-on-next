@@ -40,12 +40,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Block = void 0;
-var types_1 = require("../../types/types");
+var types_1 = require("../types/types");
 var client_1 = require("@notionhq/client");
 var image_1 = __importDefault(require("next/image"));
-var RichText_1 = require("../RichText");
-var index_1 = require("../../index");
+var RichText_1 = require("./RichText");
+var index_1 = require("../index");
 var react_1 = __importDefault(require("react"));
+var Code_1 = require("./Code");
 /**
  * A recursive component that renders a Notion block and child blocks.
  * @param mediaMap is an object that notion-on-next generates for you. Find it in public/notion-media/media-map.json.
@@ -118,7 +119,9 @@ exports.Block = (0, types_1.asyncComponent)(function (_a) {
                                 : block.image.type == "external"
                                     ? block.image.external.url
                                     : block.image.file.url;
-                            return [2 /*return*/, (react_1.default.createElement(image_1.default, { src: imageUrl || "/fallback.png", alt: "Notion page image", width: 700, height: 700 }))];
+                            return [2 /*return*/, (react_1.default.createElement("div", { className: "" },
+                                    react_1.default.createElement(image_1.default, { src: imageUrl || "/fallback.png", alt: "Notion page image", width: 700, height: 700 }),
+                                    react_1.default.createElement("span", { className: "notion_image_caption" }, block.image.caption && (react_1.default.createElement(RichText_1.RichText, { rich_text: block.image.caption })))))];
                         case "video":
                             videoUrl = databaseId && pageId && mediaMap
                                 ? mediaMap[databaseId][pageId][block.id]
@@ -126,7 +129,9 @@ exports.Block = (0, types_1.asyncComponent)(function (_a) {
                                     ? block.video.external.url
                                     : block.video.file.url;
                             if (videoUrl) {
-                                return [2 /*return*/, (react_1.default.createElement("video", { controls: true, src: videoUrl, className: "notion_".concat(block.type) }))];
+                                return [2 /*return*/, (react_1.default.createElement("div", { className: "" },
+                                        react_1.default.createElement("video", { controls: true, src: videoUrl, className: "notion_".concat(block.type) }),
+                                        react_1.default.createElement("span", { className: "notion_image_caption" }, block.video.caption && (react_1.default.createElement(RichText_1.RichText, { rich_text: block.video.caption })))))];
                             }
                             else {
                                 return [2 /*return*/, react_1.default.createElement("div", { className: "" }, "Video URL not found")];
@@ -153,9 +158,11 @@ exports.Block = (0, types_1.asyncComponent)(function (_a) {
                                         react_1.default.createElement(RichText_1.RichText, { rich_text: block.numbered_list_item.rich_text })),
                                     children))];
                         case "code":
-                            return [2 /*return*/, (
-                                // className="max-w-screen overflo-x-auto w-full"
-                                react_1.default.createElement("div", { className: "notion_".concat(block.type) }, "Code"))];
+                            return [2 /*return*/, (react_1.default.createElement("div", { className: "notion_".concat(block.type) },
+                                    react_1.default.createElement(Code_1.Code, { text: block.code.rich_text[0].plain_text, language: "javascript" })))];
+                        case "callout":
+                            return [2 /*return*/, (react_1.default.createElement("div", { className: "notion_".concat(block.type) },
+                                    react_1.default.createElement(RichText_1.RichText, { rich_text: block.callout.rich_text })))];
                         case "column_list":
                             // className={`flex justify-between gap-2`}
                             return [2 /*return*/, react_1.default.createElement("div", { className: "notion_".concat(block.type) }, children)];
@@ -167,7 +174,7 @@ exports.Block = (0, types_1.asyncComponent)(function (_a) {
                             return [2 /*return*/, (react_1.default.createElement("blockquote", { className: "notion_".concat(block.type) },
                                     react_1.default.createElement(RichText_1.RichText, { rich_text: block.quote.rich_text })))];
                         case "divider":
-                            return [2 /*return*/, react_1.default.createElement("hr", null)];
+                            return [2 /*return*/, react_1.default.createElement("hr", { className: "notion_divider" })];
                         case "to_do":
                             return [2 /*return*/, (
                                 // className="flex items-center"

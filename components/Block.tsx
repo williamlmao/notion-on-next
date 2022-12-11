@@ -1,13 +1,15 @@
-import { asyncComponent, mediaMapInterface } from "../../types/types";
+import { asyncComponent, mediaMapInterface } from "../types/types";
 import { isFullBlock } from "@notionhq/client";
+import dynamic from "next/dynamic";
 import {
   BlockObjectResponse,
   PartialBlockObjectResponse,
 } from "@notionhq/client/build/src/api-endpoints";
 import Image from "next/image";
-import { RichText } from "../RichText";
-import { getBlocks } from "../../index";
+import { RichText } from "./RichText";
+import { getBlocks } from "../index";
 import React from "react";
+import { Code } from "./Code";
 
 /**
  * A recursive component that renders a Notion block and child blocks.
@@ -125,12 +127,19 @@ export const Block = asyncComponent(
             ? block.image.external.url
             : block.image.file.url;
         return (
-          <Image
-            src={imageUrl || "/fallback.png"}
-            alt={"Notion page image"} //TODO: Update this alt text
-            width={700}
-            height={700}
-          />
+          <div className="">
+            <Image
+              src={imageUrl || "/fallback.png"}
+              alt={"Notion page image"} //TODO: Update this alt text
+              width={700}
+              height={700}
+            />
+            <span className="notion_image_caption">
+              {block.image.caption && (
+                <RichText rich_text={block.image.caption} />
+              )}
+            </span>
+          </div>
         );
       case "video":
         // If Media map does not exist, use the external url or file url from Notion. Be aware that these links expire after 1 hr. https://developers.notion.com/docs/working-with-files-and-media
@@ -142,7 +151,18 @@ export const Block = asyncComponent(
             : block.video.file.url;
         if (videoUrl) {
           return (
-            <video controls src={videoUrl} className={`notion_${block.type}`} />
+            <div className="">
+              <video
+                controls
+                src={videoUrl}
+                className={`notion_${block.type}`}
+              />
+              <span className="notion_image_caption">
+                {block.video.caption && (
+                  <RichText rich_text={block.video.caption} />
+                )}
+              </span>
+            </div>
           );
         } else {
           return <div className="">Video URL not found</div>;
@@ -182,13 +202,17 @@ export const Block = asyncComponent(
         );
       case "code":
         return (
-          // className="max-w-screen overflo-x-auto w-full"
           <div className={`notion_${block.type}`}>
-            Code
-            {/* <Code
+            <Code
               text={block.code.rich_text[0].plain_text}
               language={"javascript"}
-            /> */}
+            />
+          </div>
+        );
+      case "callout":
+        return (
+          <div className={`notion_${block.type}`}>
+            <RichText rich_text={block.callout.rich_text} />
           </div>
         );
       case "column_list":

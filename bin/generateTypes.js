@@ -111,16 +111,26 @@ var generateTypesFromDatabase = function (path, database) { return __awaiter(voi
                 databaseName = database.title[0].plain_text.replace(/[^a-z0-9]/gi, "");
                 databaseProperties = database.properties;
                 propertyTypeMap = {
-                    rich_text: "RichTextItemResponse",
-                    select: "SelectPropertyItemObjectResponse",
                     number: "NumberPropertyItemObjectResponse",
-                    title: "TitlePropertyItemObjectResponse",
-                    multi_select: "MultiSelectPropertyItemObjectResponse",
-                    checkbox: "CheckboxPropertyItemObjectResponse",
                     url: "UrlPropertyItemObjectResponse",
-                    email: "EmailPropertyItemObjectResponse",
+                    select: "SelectPropertyItemObjectResponse",
+                    multi_select: "MultiSelectPropertyItemObjectResponse",
+                    status: "StatusPropertyItemObjectResponse",
                     date: "DatePropertyItemObjectResponse",
-                    person: "PersonPropertyItemObjectResponse",
+                    email: "EmailPropertyItemObjectResponse",
+                    phone_number: "PhoneNumberPropertyItemObjectResponse",
+                    checkbox: "CheckboxPropertyItemObjectResponse",
+                    file: "FilesPropertyItemObjectResponse",
+                    created_by: "CreatedByPropertyItemObjectResponse",
+                    created_time: "CreatedTimePropertyItemObjectResponse",
+                    last_edited_time: "LastEditedByPropertyItemObjectResponse",
+                    last_edited_by: "LastEditedTimePropertyItemObjectResponse",
+                    formula: "FormulaPropertyItemObjectResponse",
+                    title: "TitlePropertyItemObjectResponse",
+                    rich_text: "RichTextPropertyItemObjectResponse",
+                    people: "PeoplePropertyItemObjectResponse",
+                    relation: "RelationPropertyItemObjectResponse",
+                    rollup: "RollupPropertyItemObjectResponse",
                 };
                 allBlockTypesFromResponse = Object.keys(databaseProperties).map(function (key) {
                     var property = databaseProperties[key];

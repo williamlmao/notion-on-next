@@ -1,6 +1,6 @@
-import { atomOneDark } from "react-syntax-highlighter/dist/esm/styles/hljs";
+import { atomOneDark } from "react-syntax-highlighter/dist/cjs/styles/hljs";
 import React from "react";
-import SyntaxHighlighter from "react-syntax-highlighter/dist/esm/default-highlight";
+import SyntaxHighlighter from "react-syntax-highlighter/dist/cjs/default-highlight";
 // //@ts-ignore
 // const DynamicSyntaxHighlighter = dynamic(
 //   () => import("react-syntax-highlighter"),

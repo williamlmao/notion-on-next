@@ -23,9 +23,8 @@ Using Notion as a CMS and Next to generate static sites is a match made in heave
 
 I had played around with a couple other Notion + React libraries, such as [react-notion-x](https://github.com/NotionX/react-notion-x) and [react-notion](https://github.com/splitbee/react-notion). These are awesome, but I found it difficult to customize everything to my liking, and I also wanted to use the official Notion API. So I wrote this one!
 
-```
-WARNING: This repo uses experimental Next 13 features in /components. Use at your own risk. Type generation, data fetchers, and downloading media are all compatible with Next 12/React.
-```
+> **WARNING**
+> This repo uses experimental Next 13 features in /components. Use at your own risk. Type generation, data fetchers, and downloading media are all compatible with Next 12/React.
 
 ## Features
 
@@ -35,7 +34,8 @@ WARNING: This repo uses experimental Next 13 features in /components. Use at you
 
 ## Installation
 
-> If you want to get started even faster, check out the [notion-on-next-starter](https://github.com/williamlmao/notion-on-next-starter) repo. It's a Next.js project that is already set up with notion-on-next.
+> **INFO**
+> You will need to create your own Next app to use this repo. If you want to get started faster, check out the [notion-on-next-starter](https://github.com/williamlmao/notion-on-next-starter) repo.
 
 - Assumes you already have a Next.js project set up. If you don't [see here](https://beta.nextjs.org/docs/installation).
 - `npm i notion-on-next`
@@ -78,7 +78,7 @@ Then, create a route to load single pages. Notion API refers to data such as the
 
 You can either write your own components to display the data, or you can use `<NotionPageBody`> to render the contents of a page.
 
-If you are using `<NotionPageBody>`, you can `import "notion-on-next/non.css"` for styling in either in your `layout.tsx` or `page.tsx` depending on which version of Next you are using. Alternatively, you can [copy the file](https://github.com/williamlmao/notion-on-next/blob/main/non.css) and change the styling to suit your preferences.
+If you are using `<NotionPageBody>`, you can `import "notion-on-next/styles.css"` for styling in either in your `layout.tsx` or `page.tsx` depending on which version of Next you are using. Alternatively, you can [copy the file](https://github.com/williamlmao/notion-on-next/blob/main/styles.css) and change the styling to suit your preferences.
 
 > The data fetchers in this library are compatible with Next 12, but NotionPageBody is a server component that is only compatible with Next 13.
 
@@ -152,9 +152,8 @@ export const cachedGetParsedPages = cache(
 
 ## Working with Media
 
-[Media from the official Notion API expires every hour](https://developers.notion.com/docs/working-with-files-and-media).
-
-> Since the public URLs expire hourly, they shouldn’t be statically referenced. If the public URL is directly referenced, the file will not be accessible at that URL after the expiration time is reached and a new URL must be retrieved via the Notion API.
+> **INFO**  
+> [Media from the official Notion API expires every hour](https://developers.notion.com/docs/working-with-files-and-media).
 
 To get around this problem, notion-on-next downloads all of the media in your database into `/public/notion-media/databaseId/pageId/blockId`. If your page has a cover photo, it will save that as `cover` inside of the pages folder.
 
@@ -215,12 +214,3 @@ The honest answer is because this started out with me wanting to play with Next 
 ## Contributing
 
 This is one of my first npm packages, so I am very open to any contributions or feedback! Please feel free to open an issue or PR.
-
-To update any code:
-
-- `npm install`
-- To modify any executable functions, like `setup` `media` or `types`, modify the files in `src/bin`
-- To modify any React components, checkout `components`
-- Data fetching functions using Notion JS SDK are in `src/getFromNotion`
-- After making changes, run `tsc` to compile the typescript files
-- If you want to test your changes locally in a next app, run `npm link` in the root of this project and then `npm link notion-on-next` in the root of your next app.

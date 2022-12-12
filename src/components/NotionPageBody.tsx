@@ -3,7 +3,7 @@ import {
   PartialBlockObjectResponse,
 } from "@notionhq/client/build/src/api-endpoints";
 import React from "react";
-import { asyncComponent, mediaMapInterface } from "../types/types";
+import { asyncComponent, mediaMapInterface } from "../../types/types";
 import { Block } from "./Block";
 
 /**

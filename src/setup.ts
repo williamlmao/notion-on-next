@@ -4,7 +4,7 @@
 import { generateTypesFromDatabase, initializeTypes } from "./generateTypes";
 import { configInterface } from "../types/types";
 import { getDatabase } from "../src/getFromNotion";
-import { fetchImages } from "./downloadMedia";
+import { fetchImages } from "../src/downloadMedia";
 import { createFolderIfDoesNotExist } from "./utils";
 
 // @ts-ignore
@@ -177,7 +177,7 @@ const processResponses = async (responses: ResponsesInterface) => {
     }
     // If downloadMedia is true, then download the media
     if (responses.downloadMedia) {
-      fetchImages(database.id);
+      await fetchImages(database.id);
     }
   }
 

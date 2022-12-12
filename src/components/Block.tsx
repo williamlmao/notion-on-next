@@ -1,13 +1,12 @@
-import { asyncComponent, mediaMapInterface } from "../types/types";
+import { asyncComponent, mediaMapInterface } from "../../types/types";
 import { isFullBlock } from "@notionhq/client";
-import dynamic from "next/dynamic";
 import {
   BlockObjectResponse,
   PartialBlockObjectResponse,
 } from "@notionhq/client/build/src/api-endpoints";
 import Image from "next/image";
 import { RichText } from "./RichText";
-import { getBlocks } from "../index";
+import { getBlocks } from "../../index";
 import React from "react";
 import { Code } from "./Code";
 import { Table } from "./Table";

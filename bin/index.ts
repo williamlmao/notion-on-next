@@ -1,7 +1,7 @@
 #! /usr/bin/env node
-import { setup } from "./setup";
-import { generateTypes } from "./generateTypes";
-import { downloadMedia } from "./downloadMedia";
+import { setup } from "../src/setup";
+import { generateTypes } from "../src/generateTypes";
+import { downloadMedia } from "../src/downloadMedia";
 
 const command = process.argv[2];
 

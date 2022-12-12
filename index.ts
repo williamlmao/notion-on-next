@@ -5,7 +5,7 @@ import {
   parsePages,
   getParsedPages,
 } from "./src/getFromNotion";
-import { NotionPageBody } from "./components/NotionPageBody";
+import { NotionPageBody } from "./src/components/NotionPageBody";
 import { mediaMapInterface } from "./types/types";
 
 export {

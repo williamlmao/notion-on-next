@@ -1,7 +1,7 @@
 import { TableBlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 import React from "react";
-import { getBlocks } from "../src/getFromNotion";
-import { asyncComponent } from "../types/types";
+import { getBlocks } from "../getFromNotion";
+import { asyncComponent } from "../../types/types";
 import { RichText } from "./RichText";
 export const Table = asyncComponent(
   async ({ block }: { block: TableBlockObjectResponse }) => {

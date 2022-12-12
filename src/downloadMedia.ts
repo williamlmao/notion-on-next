@@ -9,7 +9,6 @@ import {
   NotionOnNextPageObjectResponse,
 } from "../types/types";
 import { createFolderIfDoesNotExist, getFileExtension } from "./utils";
-import { MediaMap } from "../types/types";
 
 export const downloadMedia = async () => {
   const configPath = "./notion-on-next.config.json";
@@ -27,11 +26,13 @@ export async function fetchImages(
   pages?: NotionOnNextPageObjectResponse[],
   update?: boolean
 ) {
+  console.log("FETCHING: ", databaseId);
   // Read media map
   const mediaMapPath = "./public/notion-media/media-map.json";
   // Check if media map exists
   let mediaMap = {} as mediaMapInterface;
   if (fs.existsSync(mediaMapPath)) {
+    console.log("mediaMapPath exists: ", databaseId);
     mediaMap = JSON.parse(
       fs.readFileSync(mediaMapPath, "utf8")
     ) as mediaMapInterface;

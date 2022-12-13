@@ -1,12 +1,12 @@
 {
   "name": "notion-on-next",
-  "version": "1.0.8",
+  "version": "1.0.11",
   "description": "A framework that makes it easy to develop a Next.js App using Notion as a CMS. Automatically generates types and provides components to render your Notion pages.",
-  "main": "./dist/index.js",
+  "main": "dist/index.js",
   "bin": {
-    "non": "./dist/bin/index.js"
+    "non": "dist/bin/index.js"
   },
-  "types": "./dist/index.d.ts",
+  "types": "dist/index.d.ts",
   "repository": "https://github.com/williamlmao/notion-on-next",
   "keywords": [
     "notion",

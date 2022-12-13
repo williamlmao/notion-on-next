@@ -11,6 +11,8 @@ export interface NotionOnNextPageObjectResponse extends PageObjectResponse {
   slug: string | undefined;
   title: string | undefined;
   coverImage: string | undefined;
+  databaseName: string;
+  databaseId: string;
 }
 
 export interface mediaMapInterface {

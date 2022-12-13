@@ -1,5 +1,6 @@
 import { Client, collectPaginatedAPI, isFullPage } from "@notionhq/client";
 import {
+  GetDatabaseResponse,
   PageObjectResponse,
   PartialPageObjectResponse,
 } from "@notionhq/client/build/src/api-endpoints";
@@ -8,24 +9,21 @@ dotenv.config();
 
 export const notion = new Client({ auth: process.env.NOTION_KEY });
 
-export const getDatabase = async (databaseId: string) => {
-  try {
-    const response = await notion.databases.retrieve({
-      database_id: databaseId,
-    });
-    return response;
-  } catch (e) {
-    console.error(
-      "Error: The database ID you provided is invalid. Please double check that you have set up the Notion API integration with the database, and that you are providing the right database IDs."
-    );
-  }
+export const getDatabase = async (
+  databaseId: string
+): Promise<GetDatabaseResponse> => {
+  const response = await notion.databases.retrieve({
+    database_id: databaseId,
+  });
+  return response;
 };
 /**
  * This function pulls out the required types for notion-on-next: slug, title, and cover image to make these properties more accessible.
  * It also accepts a generic type which is meant to be passed down from getParsedPages, but can be used elsewhere.
  */
 export const parsePages = async <Type>(
-  pages: (PageObjectResponse | PartialPageObjectResponse)[]
+  pages: (PageObjectResponse | PartialPageObjectResponse)[],
+  database: GetDatabaseResponse
 ): Promise<Type[]> => {
   const parsedPages = pages.map((page) => {
     if (!isFullPage(page)) {
@@ -48,6 +46,13 @@ export const parsePages = async <Type>(
       ...page,
       slug: slug,
       title: title,
+      // @ts-ignore -- Notion API types are not consistent with the actual API
+      // lower case, replace spaces with hyphens, and remove any special characters
+      databaseName: database.title[0].plain_text
+        .trim()
+        .replace(/[^a-z0-9]/gi, "-")
+        .toLowerCase(),
+      databaseId: database.id,
       coverImage:
         page?.cover?.type === "file"
           ? page?.cover?.file?.url
@@ -74,7 +79,8 @@ export const getPages = async (databaseId: string) => {
  */
 export const getParsedPages = async <Type>(databaseId: string) => {
   const pages = await getPages(databaseId);
-  const parsedPages = await parsePages<Type>(pages);
+  const database = await getDatabase(databaseId);
+  const parsedPages = await parsePages<Type>(pages, database);
   return parsedPages;
 };
 

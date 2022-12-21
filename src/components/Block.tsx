@@ -128,12 +128,13 @@ export const Block = asyncComponent(
             ? block.image.external.url
             : block.image.file.url;
         return (
-          <div className="">
+          <div className="notion_image_container">
             <Image
               src={imageUrl || "/fallback.png"}
               alt={"Notion page image"} //TODO: Update this alt text
               width={700}
               height={700}
+              className="notion_image"
             />
             <span className="notion_caption">
               {block.image.caption && (

@@ -26,7 +26,7 @@ export async function fetchImages(
   pages?: NotionOnNextPageObjectResponse[],
   update?: boolean
 ) {
-  console.log("FETCHING: ", databaseId);
+  console.log("FETCHING media for: ", databaseId);
   // Read media map
   const mediaMapPath = "./public/notion-media/media-map.json";
   // Check if media map exists

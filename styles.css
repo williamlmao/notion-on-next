@@ -12,27 +12,27 @@ a {
   font-size: 2.5rem;
   font-weight: 700;
   line-height: 1.2;
-  margin: 0 0 1.5rem;
+  margin: 1.75rem 0 1.5rem 0;
 }
 
 .notion_heading_2 {
   font-size: 2rem;
   font-weight: 700;
   line-height: 1.2;
-  margin: 0 0 1.5rem;
+  margin: 1.75rem 0 1.5rem 0;
 }
 
 .notion_heading_3 {
   font-size: 1.5rem;
   font-weight: 700;
   line-height: 1.2;
-  margin: 0 0 1.5rem;
+  margin: 1.75rem 0 1.5rem 0;
 }
 
 .notion_paragraph {
   font-weight: 400;
   line-height: 1.5;
-  margin: 0 0 1.5rem;
+  margin: 1.25rem 0 1.25rem 0;
   font-size: 1rem;
 }
 
@@ -107,4 +107,9 @@ a {
 .notion_table_header {
   font-weight: 700;
   background-color: #f9fafb;
+}
+
+.notion_image_container,
+.notion_video_container {
+  margin: 1.25rem 0 1.25rem 0;
 }

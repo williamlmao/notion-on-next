@@ -153,12 +153,8 @@ export const Block = asyncComponent(
             : block.video.file.url;
         if (videoUrl) {
           return (
-            <div className="">
-              <video
-                controls
-                src={videoUrl}
-                className={`notion_${block.type}`}
-              />
+            <div className="notion_video_container">
+              <video controls src={videoUrl} className={`notion_video`} />
               <span className="notion_caption">
                 {block.video.caption && (
                   <RichText rich_text={block.video.caption} />
@@ -223,13 +219,10 @@ export const Block = asyncComponent(
           </div>
         );
       case "column_list":
-        // className={`flex justify-between gap-2`}
         return <div className={`notion_${block.type}`}>{children}</div>;
       case "column":
-        // className="word-wrap break-all p-4"
         return <div className={`notion_${block.type}`}>{children}</div>;
       case "quote":
-        // className="border-l-4 border-gray-300 pl-4
         return (
           <blockquote className={`notion_${block.type}`}>
             <RichText rich_text={block.quote.rich_text} />
@@ -239,8 +232,6 @@ export const Block = asyncComponent(
         return <hr className="notion_divider" />;
       case "to_do":
         return (
-          // className="flex items-center"
-          // className="mr-2"
           <div className={`notion_${block.type}_container`}>
             <input
               type="checkbox"

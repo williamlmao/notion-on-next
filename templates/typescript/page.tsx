@@ -11,8 +11,10 @@ export default async function DATABASENAMEPASCALBlog() {
       databaseId
     );
   return (
-    <div style={{ padding: "24px", margin: "auto" }}>
-      <h1 style={{ fontSize: "36px", textAlign: "center" }}>
+    <div style={{ padding: "24px", margin: "auto", fontFamily: "sans-serif" }}>
+      <h1
+        style={{ fontSize: "36px", textAlign: "center", marginBottom: "28px" }}
+      >
         DATABASENAMEPASCAL Posts
       </h1>
       <div

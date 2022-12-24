@@ -25,20 +25,27 @@ export const DATABASENAMEPASCALCard = ({
         boxShadow: "0 0 8px 0 rgba(0, 0, 0, 0.1)",
         padding: "16px",
         borderRadius: "8px",
+        border: "1px solid #9ca3af",
       }}
     >
-      <div>
-        <div>
+      <div style={{ display: "flex" }}>
+        <div style={{ overflow: "hidden", width: "50%", height: "300px" }}>
           {mediaMap[databaseId]?.[page.id]?.cover && (
             <Image
               alt={page.title || "Cover Image for " + page.id}
               src={mediaMap[databaseId]?.[page.id]?.cover}
-              width={800}
-              height={800}
+              width={300}
+              height={300}
+              style={{
+                objectFit: "cover",
+                objectPosition: "center",
+                width: "100%",
+                height: "100%",
+              }}
             />
           )}
         </div>
-        <div>
+        <div style={{ width: "50%", marginLeft: "16px" }}>
           <div
             style={{ fontSize: "24px", fontWeight: 700, marginBottom: "24px" }}
           >

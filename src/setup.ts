@@ -6,10 +6,9 @@ import { configInterface } from "../types/types";
 import { getDatabase } from "../src/getFromNotion";
 import { fetchImages } from "../src/downloadMedia";
 import { createFolderIfDoesNotExist } from "./utils";
-
-// @ts-ignore
-const prompt = require("prompt");
-const fs = require("fs");
+import { scaffoldApp } from "./scaffoldAppDirectory";
+import prompt from "prompt";
+import fs from "fs";
 
 const typeScript = [
   {
@@ -35,7 +34,6 @@ const typesDestinationFolderPath = [
     name: "typesFolderPath",
     description:
       "Notion-on-next will generate types for you. By default, it will use ./types as the folder to store them. If you would like to change the destination folder, please enter the path or hit enter to use the default.",
-    type: "string",
     default: "./types",
     pattern: /^(\.\/)?[a-zA-Z0-9_\-]+$/,
     message: "Please enter a valid path",
@@ -64,7 +62,7 @@ let configTemplate: configInterface = {
 interface ResponsesInterface {
   databaseIds: string[];
   typescript: boolean;
-  typesFolderPath: string | null;
+  typesFolderPath: string;
   downloadMedia: boolean;
 }
 
@@ -75,49 +73,45 @@ export const setup = () => {
     typesFolderPath: "",
     downloadMedia: true,
   };
-  // @ts-ignore
+
   prompt.start();
-  // What databases would you like to use?
-  // Would you like to download the media from the databases?
-  // Do you want to use TypeScript? (y/n)
-  // Yes - where do you want to store the types?
-  // @ts-ignore
+
   prompt.get(collectDbIds, function (err, result) {
     if (err) {
       console.log(err);
       return;
     }
-    responses.databaseIds = result.databaseIds
+    const databaseIds = result.databaseIds as string;
+    responses.databaseIds = databaseIds
       .split(",")
       .map((id: string) => id.trim());
-    // @ts-ignore
+
     prompt.get(downloadMedia, function (err, result) {
       if (err) {
         console.log(err);
         return;
       }
-      responses.downloadMedia = result.downloadMedia
-        .toLowerCase()
-        .includes("y");
-      // @ts-ignore
+      const downloadMedia = result.downloadMedia as string;
+      responses.downloadMedia = downloadMedia.toLowerCase().includes("y");
       prompt.get(typeScript, function (err, result) {
         if (err) {
           console.log(err);
           return;
         }
-        responses.typescript = result.typescript.toLowerCase().includes("y");
+        const typescript = result.typescript as string;
+        responses.typescript = typescript.toLowerCase().includes("y");
         if (responses.typescript) {
-          // @ts-ignore
           prompt.get(typesDestinationFolderPath, function (err, result) {
             if (err) {
               console.log(err);
               return;
             }
-            responses.typesFolderPath = result.typesFolderPath;
+            const typesFolderPath = result.typesFolderPath as string;
+            responses.typesFolderPath = typesFolderPath;
             processResponses(responses);
           });
         } else {
-          responses.typesFolderPath = null;
+          responses.typesFolderPath = "";
           processResponses(responses);
         }
       });
@@ -133,6 +127,9 @@ const processResponses = async (responses: ResponsesInterface) => {
 
   if (responses.typescript) {
     const typesFolderPath = responses.typesFolderPath;
+    if (!typesFolderPath) {
+      console.error("Error: typesFolderPath is null");
+    }
     // Check if folder typesFolderPath exists
     if (!fs.existsSync(typesFolderPath)) {
       fs.mkdirSync(typesFolderPath);
@@ -164,7 +161,6 @@ const processResponses = async (responses: ResponsesInterface) => {
     // Add the database to the config file
     configTemplate.databases[id] = {
       id,
-      // @ts-ignore -- Notion API types are not consistent with the actual API
       name: database.title[0].plain_text,
     };
     // If typescript is true, then generate the types
@@ -179,6 +175,8 @@ const processResponses = async (responses: ResponsesInterface) => {
     if (responses.downloadMedia) {
       await fetchImages(database.id);
     }
+    // Scaffold!
+    scaffoldApp(database);
   }
 
   fs.writeFileSync(
@@ -186,4 +184,5 @@ const processResponses = async (responses: ResponsesInterface) => {
     JSON.stringify(configTemplate)
   );
   // If typescript or downloadMedia is true, then make requests for the databases
+  // https://liuwill.notion.site/notion-on-next-3b6292c8a6fe4dbaa12f9af26cffe674
 };

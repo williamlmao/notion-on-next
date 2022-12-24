@@ -63,7 +63,7 @@ export async function fetchImages(
       const coverImagePath = `${pageFolderPath}/cover.${fileExtension}`;
       // Remove /public from the mediamap path so it can be used in the Next App (you don't need to include /public in the paths)
       const coverImagePathWithoutPublic = `/notion-media/${databaseId}/${pageId}/cover.${fileExtension}`;
-      // @ts-ignore -- TODO: Fix this type error
+
       mediaMap[databaseId][pageId].cover = coverImagePathWithoutPublic;
 
       await downloadMediaToFolder(

@@ -14,5 +14,6 @@
     "strict": true /* Enable all strict type-checking options. */,
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
+  // ignore files inside of /src/templates
   "exclude": ["node_modules", "dist"]
 }

@@ -1,5 +1,12 @@
-import { Client, collectPaginatedAPI, isFullPage } from "@notionhq/client";
 import {
+  Client,
+  collectPaginatedAPI,
+  isFullBlock,
+  isFullDatabase,
+  isFullPage,
+} from "@notionhq/client";
+import {
+  DatabaseObjectResponse,
   GetDatabaseResponse,
   PageObjectResponse,
   PartialPageObjectResponse,
@@ -11,11 +18,14 @@ export const notion = new Client({ auth: process.env.NOTION_KEY });
 
 export const getDatabase = async (
   databaseId: string
-): Promise<GetDatabaseResponse | undefined> => {
+): Promise<DatabaseObjectResponse | undefined> => {
   try {
     const response = await notion.databases.retrieve({
       database_id: databaseId,
     });
+    if (!isFullDatabase(response)) {
+      return undefined;
+    }
     return response;
   } catch (e) {
     console.error(
@@ -31,7 +41,7 @@ export const getDatabase = async (
  */
 export const parsePages = async <Type>(
   pages: (PageObjectResponse | PartialPageObjectResponse)[],
-  database?: GetDatabaseResponse
+  database?: DatabaseObjectResponse
 ): Promise<Type[]> => {
   const parsedPages = pages.map((page) => {
     if (!isFullPage(page)) {
@@ -54,8 +64,6 @@ export const parsePages = async <Type>(
       ...page,
       slug: slug,
       title: title,
-      // @ts-ignore -- Notion API types are not consistent with the actual API
-      // lower case, replace spaces with hyphens, and remove any special characters
       databaseName: database?.title[0]?.plain_text
         .trim()
         .replace(/[^a-z0-9]/gi, "-")

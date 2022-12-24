@@ -1,41 +1,40 @@
-## Table of Contents <!-- omit in toc -->
+# Table of Contents <!-- omit in toc -->
 
 - [About](#about)
-- [Features](#features)
+  - [Features](#features)
+  - [Who is notion-on-next for?](#who-is-notion-on-next-for)
 - [Installation](#installation)
-- [Basic usage in Next.js](#basic-usage-in-nextjs)
-- [Working with Media](#working-with-media)
-- [Commands](#commands)
-- [Supported Blocks](#supported-blocks)
+- [Usage](#usage)
+  - [Fetching Data](#fetching-data)
+  - [Working with Media](#working-with-media)
+  - [Commands](#commands)
+  - [Supported Blocks](#supported-blocks)
 - [Reference](#reference)
   - [Data fetchers](#data-fetchers)
   - [Components](#components)
 - [Why is this library only compatible Next? Why not make it a broader React library?](#why-is-this-library-only-compatible-next-why-not-make-it-a-broader-react-library)
 - [Contributing](#contributing)
 
-## About
+# About
 
-Using Notion as a CMS and Next to generate static sites is a match made in heaven. You end up with:
-
-- The ability to use the Notion's lovely editor to create and store content.
-- Really fast static sites that are easy to deploy and update.
-- ISR allows you to update your site frequently without having to redeploy, while maintaining the speed of static pages.
-
-I had played around with a couple other Notion + React libraries, such as [react-notion-x](https://github.com/NotionX/react-notion-x) and [react-notion](https://github.com/splitbee/react-notion). These are awesome, but I found it difficult to customize everything to my liking, and I also wanted to use the official Notion API. So I wrote this one!
+Notion-on-next makes it really easy to build a Nextjs app that uses Notion as a CMS.
 
 > **WARNING**
 > This repo uses experimental Next 13 features in /components. Use at your own risk. Type generation, data fetchers, and downloading media are all compatible with Next 12/React.
 
 ## Features
 
-- Automatically generates types based on your Notion database properties.
-- Provides React components to render your Notion Pages, but also makes it easy to fetch your Notion data and build your own custom components.
-- Downloads all of the media from your database into your public folder, to get around Notion API's 1 hr media expiration.
+- Automatically generates types that match your database properties
+- Provides components to render your Notion Pages
+- Provides data fetching functions that add some utility to the [notion-sdk](https://github.com/makenotion/notion-sdk-js)
+- Downloads all of the media from your database into your public folder, [to get around Notion API's 1 hr media expiration](https://developers.notion.com/docs/working-with-files-and-media#retrieving-files-and-media-via-the-notion-api)
+- Scaffolds out all of the necessary components for /app/[yourdatabase]. You can get a working app up and running in 5 minutes!
 
-## Installation
+## Who is notion-on-next for?
 
-> **INFO**
-> You will need to create your own Next app to use this repo. If you want to get started faster, check out the [notion-on-next-starter](https://github.com/williamlmao/notion-on-next-starter) repo.
+It's for Next.js developers who want to use Notion as a CMS. You should have an understanding of the Next 13 app directory and data fetching patterns. This library gives you a solid foundation to build on top of, but if you are looking for an out-of-the-box solution, I recommend checking out [nextjs-notion-starter-kit](https://github.com/transitive-bullshit/nextjs-notion-starter-kit).
+
+# Installation
 
 - Assumes you already have a Next.js project set up. If you don't [see here](https://beta.nextjs.org/docs/installation).
 - `npm i notion-on-next`
@@ -45,7 +44,9 @@ I had played around with a couple other Notion + React libraries, such as [react
 
 Your types will be automatically generated based on your database properties, and all of the media will be downloaded to your public folder.
 
-## Basic usage in Next.js
+# Usage
+
+## Fetching Data
 
 Use `getParsedPages` to retrieve all pages in a database. If you're using typescript, this function also accepts a generic type, which was generated for you inside of notion-on-next.types.ts during setup. This type uses the title of your database in Notion. If your database was titled "Blog", you would use `getParsedPages<BlogPageObjectResponse>(databaseId)`.
 
@@ -187,9 +188,9 @@ export const ImageCard = ({databaseId, pageId, blockId}) => {
 
 You can see all of the supported blocks [here](https://notion-on-next-starter.vercel.app/programming/Notion-on-next-Supported-Blocks-Examples). Please submit an issue if there is a block that you would like to see supported.
 
-## Reference
+# Reference
 
-### Data fetchers
+## Data fetchers
 
 | Name           | Description                                                                                            |
 | -------------- | ------------------------------------------------------------------------------------------------------ |
@@ -198,7 +199,7 @@ You can see all of the supported blocks [here](https://notion-on-next-starter.ve
 | getParsedPages | Fetches a page but exposes title, coverImage, and slug. Allows you to pass in a database-specific type |
 | getBlocks      | Fetches all blocks in a page, raw                                                                      |
 
-### Components
+## Components
 
 | Name             | Description                                                                                                                                    |
 | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -207,10 +208,10 @@ You can see all of the supported blocks [here](https://notion-on-next-starter.ve
 | Block            | Renders a Notion block and child blocks.                                                                                                       |
 | RichText         | Renders rich text.                                                                                                                             |
 
-## Why is this library only compatible Next? Why not make it a broader React library?
+# Why is this library only compatible Next? Why not make it a broader React library?
 
 The honest answer is because this started out with me wanting to play with Next 13 and React experimental features. I used a lot of those features and patterns in this library. However, this could be refactored to work for vanilla React. If you're interested in that, let me know. With enough interest I may re-write the library.
 
-## Contributing
+# Contributing
 
 This is one of my first npm packages, so I am very open to any contributions or feedback! Please feel free to open an issue or PR.

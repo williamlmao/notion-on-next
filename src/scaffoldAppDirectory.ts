@@ -87,6 +87,6 @@ export const scaffoldApp = async (
   fs.writeFileSync(slugPagePath, slugPageTemplateReplaced);
 
   console.log(
-    " 🎉  Scaffolded database: " + databaseName + "in " + databasePath
+    "🎉  Scaffolded database: " + databaseName + "in " + databasePath + "\n"
   );
 };

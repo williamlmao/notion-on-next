@@ -58,7 +58,7 @@ const scaffoldAppDirectory = [
   {
     name: "scaffoldAppDirectory",
     description:
-      "\nWould you like to scaffold the app directory with your databases? This will overwrite any existing directory by the same name. Recommended if you are starting out with a new build. (y/n)",
+      "\nWould you like to scaffold the app directory with your databases? WARNING: THIS WILL OVERWRITE YOUR /app/[databasename]. Only recommended if you are starting out with a new build. Still want to scaffold? (y/n)",
     pattern: /y[es]*|n[o]?/,
     message: "Please enter yes or no",
     default: "yes",

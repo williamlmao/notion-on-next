@@ -4,6 +4,7 @@ import {
 } from "@notionhq/client/build/src/api-endpoints";
 import fs from "fs";
 import { getDatabase } from "./getFromNotion";
+import { checkNextVersionNumber } from "./utils";
 
 export const scaffoldApp = async (
   database: DatabaseObjectResponse | string,
@@ -17,15 +18,11 @@ export const scaffoldApp = async (
   }
   database = database as DatabaseObjectResponse;
   // Check if package.json contains next 13 or greater
-  const packageJson = JSON.parse(fs.readFileSync("./package.json", "utf8"));
-  const nextVersion = packageJson.dependencies.next;
-  if (nextVersion.split(".")[0] < 13) {
-    console.log(
-      "Next.js version must be 13 or greater. Please upgrade your Next.js version."
-    );
+  const nextVersionCompatible = checkNextVersionNumber(13);
+  if (!nextVersionCompatible) {
+    console.log("Please update your next version to 13 or greater");
     return;
   }
-
   const databaseName = database?.title[0]?.plain_text;
   const databaseId = database.id;
   const databaseNameSpinalCase = databaseName
@@ -88,4 +85,8 @@ export const scaffoldApp = async (
   );
   const slugPageTemplateReplaced = replaceInPageTemplate(slugPageTemplate);
   fs.writeFileSync(slugPagePath, slugPageTemplateReplaced);
+
+  console.log(
+    " 🎉  Scaffolded database: " + databaseName + "in " + databasePath
+  );
 };

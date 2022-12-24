@@ -30,3 +30,16 @@ export const appendToFile = async (
 export const getFileExtension = (url: string) => {
   return url.match(/\.([0-9a-z]+)(?:[\?#]|$)/i)?.[1];
 };
+
+export const checkNextVersionNumber = (compatibleVersion = 13) => {
+  const packageJson = JSON.parse(fs.readFileSync("./package.json", "utf8"));
+  const nextVersionString = packageJson.dependencies.next;
+
+  const nextVersionNumber = Number(
+    nextVersionString.replace("^", "").split(".")[0]
+  );
+  if (nextVersionNumber < compatibleVersion) {
+    return false;
+  }
+  return true;
+};

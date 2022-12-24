@@ -57,14 +57,16 @@ export const initializeTypes = async (path: string) => {
       }
     `
   );
-  console.log("Initialized notion-on-next.types.ts");
+  console.log("\n🤖 Initialized notion-on-next.types.ts \n");
 };
 
 export const generateTypesFromDatabase = async (
   path: string,
   database: DatabaseObjectResponse
 ) => {
-  const databaseName = database.title[0].plain_text.replace(/[^a-z0-9]/gi, "");
+  const databaseName = database.title[0].plain_text
+    .replace(/[^a-z0-9]/gi, "")
+    .toString();
   const databaseProperties = database.properties;
   const typeDefStart = `\nexport type ${databaseName}PageObjectResponse = NotionOnNextPageObjectResponse & {\n\tproperties: {\n`;
   const typeDefEnd = `\n\t}\n}`;
@@ -77,8 +79,9 @@ export const generateTypesFromDatabase = async (
   const typeDef = typeDefStart + typeDefProperties.join("\n") + typeDefEnd;
   await appendToFile(path, typeDef, () => {
     console.log(
-      `Generated a type for your database ${databaseName}: ${database}PageObjectResponse in` +
-        path
+      `⌨️ Generated a type for your database ${databaseName}: ${database}PageObjectResponse in` +
+        path +
+        "\n"
     );
   });
 };

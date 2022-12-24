@@ -26,13 +26,12 @@ export async function fetchImages(
   pages?: NotionOnNextPageObjectResponse[],
   update?: boolean
 ) {
-  console.log("FETCHING media for: ", databaseId);
+  console.log("🎾 Fetching media for: ", databaseId, "\n");
   // Read media map
   const mediaMapPath = "./public/notion-media/media-map.json";
   // Check if media map exists
   let mediaMap = {} as mediaMapInterface;
   if (fs.existsSync(mediaMapPath)) {
-    console.log("mediaMapPath exists: ", databaseId);
     mediaMap = JSON.parse(
       fs.readFileSync(mediaMapPath, "utf8")
     ) as mediaMapInterface;
@@ -71,7 +70,12 @@ export async function fetchImages(
         coverImagePath,
         () => {
           console.log(
-            `Downloaded cover image for ${page.title} (id:${pageId}) in database: ${databaseId}`
+            `✅  Downloaded cover image for ${page.title} (id:${pageId}) in database: ${databaseId}\n`
+          );
+        },
+        () => {
+          console.log(
+            `⏭  Cover image for ${page.title} already exists. Skipping download.\n`
           );
         },
         update
@@ -106,7 +110,10 @@ export async function fetchImages(
         url,
         blockImagePath,
         () => {
-          `Downloaded image for blockId: ${block.id} in ${page.title} (id:${pageId}) in databaseId: ${databaseId}`;
+          `✅  Downloaded ${block.type} for blockId: ${block.id} in ${page.title} (id:${pageId}) in databaseId: ${databaseId} \n`;
+        },
+        () => {
+          `⏭  ${block.type} for blockId: ${block.id} in ${page.title} already exists. Skipping download. \n`;
         },
         update
       );
@@ -120,11 +127,11 @@ export const downloadMediaToFolder = async (
   url: string,
   path: string,
   callback: () => void,
+  alreadyExistsCallback: () => void,
   update?: boolean
 ) => {
   if (fs.existsSync(path) && !update) {
-    console.log(`File already exists at ${path}, skipping download`);
-    callback();
+    alreadyExistsCallback();
     return;
   }
   // overwrite if file already exists

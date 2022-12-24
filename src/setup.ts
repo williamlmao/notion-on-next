@@ -54,6 +54,17 @@ const collectDbIds = [
   },
 ];
 
+const scaffoldAppDirectory = [
+  {
+    name: "scaffoldAppDirectory",
+    description:
+      "\nWould you like to scaffold the app directory with your databases? This will overwrite any existing directory by the same name. Recommended if you are starting out with a new build. (y/n)",
+    pattern: /y[es]*|n[o]?/,
+    message: "Please enter yes or no",
+    default: "yes",
+  },
+];
+
 let configTemplate: configInterface = {
   databases: {},
   typesFolderPath: "./types",
@@ -64,6 +75,7 @@ interface ResponsesInterface {
   typescript: boolean;
   typesFolderPath: string;
   downloadMedia: boolean;
+  scaffoldAppDirectory: boolean;
 }
 
 export const setup = () => {
@@ -72,6 +84,7 @@ export const setup = () => {
     typescript: false,
     typesFolderPath: "",
     downloadMedia: true,
+    scaffoldAppDirectory: true,
   };
 
   prompt.start();
@@ -108,7 +121,18 @@ export const setup = () => {
             }
             const typesFolderPath = result.typesFolderPath as string;
             responses.typesFolderPath = typesFolderPath;
-            processResponses(responses);
+            prompt.get(scaffoldAppDirectory, function (err, result) {
+              if (err) {
+                console.log(err);
+                return;
+              }
+              const scaffoldAppDirectory =
+                result.scaffoldAppDirectory as string;
+              responses.scaffoldAppDirectory = scaffoldAppDirectory
+                .toLowerCase()
+                .includes("y");
+              processResponses(responses);
+            });
           });
         } else {
           responses.typesFolderPath = "";
@@ -136,10 +160,6 @@ const processResponses = async (responses: ResponsesInterface) => {
       // Create a file in the folder called notion-on-next.types.ts
     }
 
-    console.log(
-      "Creating types file",
-      `${typesFolderPath}/notion-on-next.types.ts`
-    );
     await initializeTypes(`${typesFolderPath}/notion-on-next.types.ts`);
   } else {
     configTemplate.typesFolderPath = null;
@@ -158,12 +178,12 @@ const processResponses = async (responses: ResponsesInterface) => {
         20
       )}-${id.slice(20)}`;
     }
-    // Add the database to the config file
+
     configTemplate.databases[id] = {
       id,
       name: database.title[0].plain_text,
     };
-    // If typescript is true, then generate the types
+
     if (responses.typescript) {
       await createFolderIfDoesNotExist(`${responses.typesFolderPath}`);
       generateTypesFromDatabase(
@@ -171,12 +191,14 @@ const processResponses = async (responses: ResponsesInterface) => {
         database
       );
     }
-    // If downloadMedia is true, then download the media
+
     if (responses.downloadMedia) {
       await fetchImages(database.id);
     }
-    // Scaffold!
-    scaffoldApp(database);
+
+    if (responses.scaffoldAppDirectory) {
+      scaffoldApp(database);
+    }
   }
 
   fs.writeFileSync(

@@ -25,17 +25,25 @@ export default async function BlogPage({ params }) {
 
   return (
     <div>
-      <div>
+      <div style={{ width: "800px", margin: "20px auto 20px auto" }}>
         <Image
           src={mediaMap[databaseId][page.id].cover}
-          alt={page.title || "DATABASENAMEPASCAL Post"}
-          width={500}
-          height={500}
+          alt={page.title || "Projects Post"}
+          width={800}
+          height={800}
         />
 
         <div>
-          <div>{page.title}</div>
-          <div>{new Date(page.created_time).toLocaleDateString()}</div>
+          <div
+            style={{ fontSize: "42px", fontWeight: 700, textAlign: "center" }}
+          >
+            {page.title}
+          </div>
+          <div
+            style={{ fontSize: "24px", fontWeight: 500, textAlign: "center" }}
+          >
+            {new Date(page.created_time).toLocaleDateString()}
+          </div>
         </div>
       </div>
       <hr />

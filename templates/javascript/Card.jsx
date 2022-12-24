@@ -20,12 +20,14 @@ export const DATABASENAMEPASCALCard = ({ page, databaseId }) => {
     >
       <div>
         <div>
-          <Image
-            alt={page.title || "Cover Image for " + page.id}
-            src={mediaMap[databaseId]?.[page.id]?.cover}
-            width={800}
-            height={800}
-          />
+          {mediaMap[databaseId]?.[page.id]?.cover && (
+            <Image
+              alt={page.title || "Cover Image for " + page.id}
+              src={mediaMap[databaseId]?.[page.id]?.cover}
+              width={800}
+              height={800}
+            />
+          )}
         </div>
         <div>
           <div

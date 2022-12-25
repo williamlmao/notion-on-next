@@ -41,3 +41,17 @@ export interface configInterface {
   };
   typesFolderPath: string | null;
 }
+
+type BooleanFilter = {
+  type: "checkbox";
+  value: boolean;
+};
+
+type DateFilter = {
+  type: "date";
+  value: string;
+};
+
+export interface PagesFilters {
+  [key: string]: BooleanFilter | DateFilter;
+}

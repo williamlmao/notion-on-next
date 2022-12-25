@@ -12,6 +12,7 @@ import {
   PartialPageObjectResponse,
 } from "@notionhq/client/build/src/api-endpoints";
 import * as dotenv from "dotenv"; // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
+import { PagesFilters } from "../types/types";
 dotenv.config();
 
 export const notion = new Client({ auth: process.env.NOTION_KEY });
@@ -81,11 +82,105 @@ export const parsePages = async <Type>(
 /**
  * This is a cached function that fetches all pages from a Notion database.
  */
-export const getPages = async (databaseId: string) => {
+export const getPages = async (databaseId: string, filters?: PagesFilters) => {
   const response = await notion.databases.query({
     database_id: databaseId as string,
   });
-  return response.results;
+  const pages = response.results;
+
+  if (!filters) {
+    return pages;
+  }
+
+  const filteredPages = pages.filter((page) => {
+    if (!isFullPage(page)) {
+      return false;
+    }
+
+    const filterEntries = Object.entries(filters);
+    let pass = true;
+    filterEntries.forEach(([key, filter]) => {
+      switch (filter.type) {
+        case "checkbox":
+          if (page.properties[key].type === "checkbox") {
+            // @ts-ignore
+            if (page.properties[key].checkbox !== filter.value) {
+              pass = false;
+            }
+          }
+          break;
+        // case "multi_select":
+        //   if (page.properties[key].type === "multi_select") {
+        //     // @ts-ignore
+        //     const pageOptions = page.properties[key].multi_select.map(
+        //       (option) => option.name
+        //     );
+        //     const filterOptions = filter.value;
+        //     filterOptions.forEach((filterOption) => {
+        //       if (!pageOptions.includes(filterOption)) {
+        //         pass = false;
+        //       }
+        //     });
+        //   }
+        //   break;
+        // case "select":
+        //   if (page.properties[key].type === "select") {
+        //     // @ts-ignore
+        //     if (page.properties[key].select.name !== filter.value) {
+        //       pass = false;
+        //     }
+        //   }
+        //   break;
+        // case "text":
+        //   if (page.properties[key].type === "rich_text") {
+        //     // @ts-ignore
+        //     const pageText = page.properties[key].rich_text[0].plain_text;
+        //     const filterText = filter.value;
+        //     if (!pageText.includes(filterText)) {
+        //       pass = false;
+        //     }
+        //   }
+        //   break;
+        // case "date":
+        //   if (page.properties[key].type === "date") {
+        //     // @ts-ignore
+        //     const pageDate = page.properties[key].date.start;
+        //     const filterDate = filter.value;
+        //     if (pageDate !== filterDate) {
+        //       pass = false;
+        //     }
+        //   }
+        //   break;
+        // case "number":
+        //   if (page.properties[key].type === "number") {
+        //     // @ts-ignore
+        //     const pageNumber = page.properties[key].number;
+        //     const filterNumber = filter.value;
+        //     if (pageNumber !== filterNumber) {
+        //       pass = false;
+        //     }
+        //   }
+        //   break;
+        // case "people":
+        //   if (page.properties[key].type === "people") {
+        //     // @ts-ignore
+        //     const pagePeople = page.properties[key].people;
+        //     const filterPeople = filter.value;
+        //     if (pagePeople !== filterPeople) {
+        //       pass = false;
+        //     }
+        //   }
+        //   break;
+        // case "email":
+        //   if (page.properties[key].type === "email") {
+        //     // @ts-ignore
+        //     const pageEmail = page.properties[key].email;
+        //     const filter
+      }
+    });
+    return pass;
+  });
+  return filteredPages;
 };
 
 /**
@@ -93,8 +188,11 @@ export const getPages = async (databaseId: string) => {
  * Accepts a generic type, which is generated for you after running setup in notion-on-next.
  * The generic type should be a version of PageObjectResponse, but with your database's properties.
  */
-export const getParsedPages = async <Type>(databaseId: string) => {
-  const pages = await getPages(databaseId);
+export const getParsedPages = async <Type>(
+  databaseId: string,
+  filters?: PagesFilters
+) => {
+  const pages = await getPages(databaseId, filters);
   const database = await getDatabase(databaseId);
   const parsedPages = await parsePages<Type>(pages, database);
   return parsedPages;

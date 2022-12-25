@@ -8,7 +8,9 @@ const databaseId = "DATABASEID";
 export default async function DATABASENAMEPASCALBlog() {
   const pages =
     await cachedGetParsedPages<DATABASENAMEPASCALPageObjectResponse>(
-      databaseId
+      databaseId,
+      undefined, // Add filters here: https://developers.notion.com/reference/post-database-query-filter
+      [{ timestamp: "last_edited_time", direction: "descending" }] // Add sorts here: https://developers.notion.com/reference/post-database-query-sort
     );
   return (
     <div style={{ padding: "24px", margin: "auto", fontFamily: "sans-serif" }}>

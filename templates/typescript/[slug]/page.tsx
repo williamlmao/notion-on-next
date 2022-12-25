@@ -37,12 +37,14 @@ export default async function BlogPage({
   return (
     <div>
       <div style={{ width: "800px", margin: "20px auto 20px auto" }}>
-        <Image
-          src={mediaMap[databaseId][page.id].cover}
-          alt={page.title || "Projects Post"}
-          width={800}
-          height={800}
-        />
+        {mediaMap[databaseId][page.id].cover && (
+          <Image
+            src={mediaMap[databaseId][page.id].cover}
+            alt={page.title || "Projects Post"}
+            width={800}
+            height={800}
+          />
+        )}
 
         <div>
           <div

@@ -215,7 +215,14 @@ export const Block = asyncComponent(
       case "callout":
         return (
           <div className={`notion_${block.type}`}>
-            <RichText rich_text={block.callout.rich_text} />
+            <div className="notion_callout_emoji">
+              {block.callout.icon?.type === "emoji"
+                ? block.callout.icon.emoji
+                : ""}
+            </div>
+            <div className="notion_callout_text">
+              <RichText rich_text={block.callout.rich_text} />
+            </div>
           </div>
         );
       case "column_list":

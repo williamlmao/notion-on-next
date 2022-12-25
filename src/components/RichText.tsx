@@ -30,11 +30,16 @@ export const RichText = ({
         }
         if (code) {
           // Remove "`" from text
-          text = <code className="bg-gray-600 text-red-500">{text}</code>;
+          text = <code className="notion_inline_code">{text}</code>;
         }
         if (rich_text_item.href) {
           text = (
-            <a href={rich_text_item.href} target="_blank" rel="noreferrer">
+            <a
+              href={rich_text_item.href}
+              target="_blank"
+              rel="noreferrer"
+              className="notion_link"
+            >
               {text}
             </a>
           );

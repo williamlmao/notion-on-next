@@ -36,13 +36,14 @@ It's for Next.js developers who want to use Notion as a CMS. You should have an 
 
 # Installation
 
-- Assumes you already have a Next.js project set up. If you don't [see here](https://beta.nextjs.org/docs/installation).
-- `npm i notion-on-next`
-- Make sure your Notion Databases have a connection setup
-- Add NOTION_KEY=yoursecret to your .env
-- `npx non setup`
-
-Your types will be automatically generated based on your database properties, and all of the media will be downloaded to your public folder.
+1. Create a fresh Next app with `npx create-next-app@latest --experimental-app`
+2. Install notion-on next: `npm i notion-on-next`
+3. [Create a Notion integration.](https://www.notion.so/help/create-integrations-with-the-notion-api#create-an-internal-integration)
+4. In Notion, share your database with your newly created integration.
+5. Get [your internal integration token](https://www.notion.so/my-integrations), and add it to a .env file in the root directory as `NOTION_KEY=yourtoken`
+6. Run `npx non setup`. Make sure to hit yes when prompted to download media and scaffold the app directory. Typescript is recommended.
+7. You’re ready to go! Run npm run dev and then visit http://localhost:3000/yourdatabasename to see your content.
+8. You might notice that your app is slow in development mode. This is because it needs to refetch your data from Notion whenever you refresh or go to a new page. To try out the production build, run npm run build and then npm run start.
 
 # Usage
 

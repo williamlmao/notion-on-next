@@ -2,7 +2,7 @@
   "compilerOptions": {
     "jsx": "react",
     "declaration": true,
-    "outDir": "dist",
+    "outDir": "./dist",
     "target": "es6" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
 
     "module": "commonjs" /* Specify what module code is generated. */,
@@ -15,5 +15,5 @@
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
   // ignore files inside of /src/templates
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["node_modules", "./dist/**/*"]
 }

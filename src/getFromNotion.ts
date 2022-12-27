@@ -119,7 +119,7 @@ export const getPages = async (
 export const getParsedPages = async <Type>(
   databaseId: string,
   // TODO: Talk with notion team about how to get the filter types. They are currently not exported.
-  filter: any,
+  filter?: any,
   sorts?: any
 ) => {
   const pages = await getPages(databaseId, filter, sorts);

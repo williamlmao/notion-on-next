@@ -2,8 +2,8 @@
 import { getBlocks, getParsedPages } from "notion-on-next";
 import { cache } from "react";
 
-export const cachedGetParsedPages = cache(async (pageId) => {
-  const pages = await getParsedPages(pageId);
+export const cachedGetParsedPages = cache(async (pageId, filter, sorts) => {
+  const pages = await getParsedPages(pageId, filter, sorts);
   return pages;
 });
 

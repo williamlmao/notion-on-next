@@ -13,6 +13,7 @@ import {
 } from "@notionhq/client/build/src/api-endpoints";
 import * as dotenv from "dotenv"; // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
 import { PagesFilters } from "../types/types";
+import { pascalCase } from "./utils";
 dotenv.config();
 
 export const notion = new Client({ auth: process.env.NOTION_KEY });
@@ -65,7 +66,7 @@ export const parsePages = async <Type>(
       ...page,
       slug: slug,
       title: title,
-      databaseName: pascaleCase(database?.title[0]?.plain_text),
+      databaseName: pascalCase(database?.title[0]?.plain_text),
       databaseId: database?.id,
       coverImage:
         page?.cover?.type === "file"

@@ -1,12 +1,9 @@
 #! /usr/bin/env node
-import {
-  DatabaseObjectResponse,
-  GetDatabaseResponse,
-} from "@notionhq/client/build/src/api-endpoints";
+import { DatabaseObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 import fs from "fs";
 import { getDatabase } from "../src/getFromNotion";
 import { configInterface } from "../types/types";
-import { createFolderIfDoesNotExist } from "./utils";
+import { createFolderIfDoesNotExist, pascalCase } from "./utils";
 
 export const generateTypes = async () => {
   // Read users config file
@@ -64,9 +61,7 @@ export const generateTypesFromDatabase = async (
   path: string,
   database: DatabaseObjectResponse
 ) => {
-  const databaseName = database.title[0].plain_text
-    .replace(/[^a-z0-9]/gi, "")
-    .toString();
+  const databaseName = pascalCase(database.title[0].plain_text);
   const databaseProperties = database.properties;
   const typeDefStart = `\nexport type ${databaseName}PageObjectResponse = NotionOnNextPageObjectResponse & {\n\tproperties: {\n`;
   const typeDefEnd = `\n\t}\n}`;

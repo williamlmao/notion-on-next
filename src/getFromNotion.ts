@@ -65,10 +65,7 @@ export const parsePages = async <Type>(
       ...page,
       slug: slug,
       title: title,
-      databaseName: database?.title[0]?.plain_text
-        .trim()
-        .replace(/[^a-z0-9]/gi, "-")
-        .toLowerCase(),
+      databaseName: pascaleCase(database?.title[0]?.plain_text),
       databaseId: database?.id,
       coverImage:
         page?.cover?.type === "file"

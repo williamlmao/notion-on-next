@@ -4,7 +4,7 @@ import {
 } from "@notionhq/client/build/src/api-endpoints";
 import fs from "fs";
 import { getDatabase } from "./getFromNotion";
-import { checkNextVersionNumber } from "./utils";
+import { checkNextVersionNumber, pascalCase, spinalCase } from "./utils";
 
 export const scaffoldApp = async (
   database: DatabaseObjectResponse | string,
@@ -25,15 +25,8 @@ export const scaffoldApp = async (
   }
   const databaseName = database?.title[0]?.plain_text;
   const databaseId = database.id;
-  const databaseNameSpinalCase = databaseName
-    .toLowerCase()
-    .replace(/ /g, "-")
-    .replace(/[^a-zA-Z0-9-]/g, "");
-  // PascalCaseDatabaseName
-  const databaseNamePascalCase = databaseNameSpinalCase
-    .split("-")
-    .map((word: string) => word[0].toUpperCase() + word.slice(1))
-    .join("");
+  const databaseNameSpinalCase = spinalCase(databaseName);
+  const databaseNamePascalCase = pascalCase(databaseName);
 
   const databasePath = `./app/${databaseNameSpinalCase}`;
   if (!fs.existsSync(databasePath)) {

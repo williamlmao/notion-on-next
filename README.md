@@ -41,9 +41,11 @@ It's for Next.js developers who want to use Notion as a CMS. You should have an 
 3. Install notion-on next: `npm i notion-on-next`
 4. [Create a Notion integration](https://developers.notion.com/docs/create-a-notion-integration) and share your database with your newly created integration.
 5. [Get your internal integration token](https://www.notion.so/my-integrations), and add it to a .env file in the root directory as `NOTION_KEY=yourtoken`
-6. Run `npx non setup`. You can either add your personal databases, or if you’d like to start from a template go ahead and [copy this page](https://www.notion.so/notion-on-next-3b6292c8a6fe4dbaa12f9af26cffe674) which contains two sample databases. Make sure to hit yes when prompted to download media and scaffold the app directory. Typescript is recommended.
+6. Run `npx non setup`. You can either add your personal databases, or if you’d like to start from a template go ahead and [copy this page](https://liuwill.notion.site/notion-on-next-Template-Databases-3b6292c8a6fe4dbaa12f9af26cffe674) which contains two sample databases. Make sure to hit yes when prompted to download media and scaffold the app directory. Typescript is recommended.
 7. You’re ready to go! Run npm run dev and then visit http://localhost:3000/yourdatabasename to see your content.
 8. You might notice that your app is slow in development mode. This is because it needs to refetch your data from Notion whenever you refresh or go to a new page. To try out the production build, run npm run build and then npm run start.
+
+For a more detailed walkthrough of customizing your app, check out [this blog post](https://www.willliu.com/blog/How-to-build-a-Notion-powered-Next-js-App-in-5-minutes-with-notion-on-next).
 
 # Usage
 

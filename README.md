@@ -29,6 +29,7 @@ Notion-on-next makes it really easy to build a Nextjs app that uses Notion as a 
 - Provides data fetching functions that add some utility to the [notion-sdk](https://github.com/makenotion/notion-sdk-js)
 - Downloads all of the media from your database into your public folder, [to get around Notion API's 1 hr media expiration](https://developers.notion.com/docs/working-with-files-and-media#retrieving-files-and-media-via-the-notion-api)
 - Scaffolds out all of the necessary components for /app/[yourdatabase]. You can get a working app up and running in 5 minutes!
+- Uses the official Notion API. When using unofficial APIs, everything within your database/site have to be public. Using the official Notion API you are able to choose what pages are visible.
 
 ## Who is notion-on-next for?
 
